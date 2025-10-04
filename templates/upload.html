@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S4CARLISLE DOI Finder — Upload Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <meta name="description" content="Professional DOI finder and citation management tool by S4CARLISLE Publishing Services">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="/static/images/logo.png" alt="S4CARLISLE Publishing Services" class="brand-logo" loading="eager"/>
+    </div>
+    
+    <header class="header">
+      <h1>DOI Finder</h1>
+      <p class="tagline">Professional Citation Management</p>
+    </header>
+
+    <div class="upload-section">
+      <div class="upload-card">
+        <h2>Upload Document</h2>
+        <p>Upload a Word document (.docx) to extract and process citations</p>
+
+        <form id="uploadForm" enctype="multipart/form-data">
+          <div class="file-drop-area" id="fileDropArea">
+            <div class="file-drop-content">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+              </svg>
+              <h3>Drop your .docx file here</h3>
+              <p>or <strong>click to browse</strong></p>
+              <input type="file" id="fileInput" name="file" accept=".docx" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="citationFormat">Citation Format:</label>
+            <select id="citationFormat" name="citation_format">
+              <option value="APA">APA (American Psychological Association)</option>
+              <option value="AMA">AMA (American Medical Association)</option>
+            </select>
+          </div>
+
+          <button type="submit" id="uploadBtn" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7,10 12,15 17,10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Upload & Process
+          </button>
+        </form>
+
+        <div id="uploadProgress" class="progress-section" style="display: none;">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="progressMessage">Uploading file...</p>
+        </div>
+      </div>
+
+      <div class="features-card">
+        <h3>Features</h3>
+        <ul class="features-list">
+          <li>✔ Automatic citation extraction from Word documents</li>
+          <li>✔ DOI lookup via PubMed and CrossRef APIs</li>
+          <li>✔ Multiple citation formats (APA, AMA)</li>
+          <li>✔ Bulk processing and export options</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <h3>How it works</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Upload</h4>
+            <p>Upload your Word document containing citations</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Extract</h4>
+            <p>AI automatically finds and parses citations</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Lookup</h4>
+            <p>Search PubMed and CrossRef for DOIs</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Review</h4>
+            <p>Verify and edit results before export</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/upload2.js"></script>
+</body>
+</html>

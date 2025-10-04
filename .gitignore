@@ -1,0 +1,9 @@
+# filepath: /Users/harikrishnam/Desktop/doi finder 2 copy 2/.gitignore
+temp/
+__pycache__/
+*.pyc
+.DS_Store
+venv/
+.env
+*.docx
+*.csv

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>S4CARLISLE DOI Finder — Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <meta name="description" content="Professional DOI finder and citation management tool by S4CARLISLE Publishing Services">
+</head>
+<body>
+  <main class="container">
+    <div class="logo-container">
+      <img src="/static/images/logo.png" alt="S4CARLISLE Publishing Services" class="brand-logo" loading="eager"/>
+    </div>
+    
+    <header class="header">
+      <h1>Review Results</h1>
+      <p class="tagline">Citation Analysis & DOI Management</p>
+      <div class="meta">
+        <strong>Job:</strong> {{ job.id }} &nbsp;|&nbsp;
+        <strong>File:</strong> {{ job.filename }} &nbsp;|&nbsp;
+        <strong>Status:</strong> {{ job.status }}
+      </div>
+    </header>
+
+    <section class="controls">
+      <button id="exportCsv" class="btn">Export CSV</button>
+
+      <label for="applyMode">Apply mode</label>
+      <select id="applyMode">
+        <option value="append_new_section">Append new section (safe)</option>
+        <option value="inline">Inline (attempt to insert into existing refs)</option>
+        <option value="replace_references">Replace references section (overwrite)</option>
+      </select>
+
+      <label for="citationStyle">Citation style</label>
+      <select id="citationStyle">
+        <option value="APA">APA</option>
+        <option value="AMA">AMA</option>
+      </select>
+
+      <button id="applyBtn" class="btn btn-primary">Apply / Replace selected DOIs</button>
+
+      <a id="downloadLink" class="btn btn-success hidden" href="#">Download processed document</a>
+    </section>
+
+    <section class="citations">
+      <table>
+        <thead>
+          <tr>
+            <th><input id="selectAll" type="checkbox" title="Select all"></th>
+            <th>#</th><th>Original citation</th><th>Status</th><th>DOI (editable)</th><th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in citations %}
+          <tr data-id="{{ c.id }}">
+            <td><input type="checkbox" class="select" {% if c.accepted %}checked{% endif %}></td>
+            <td>{{ c.id }}</td>
+            <td class="original">{{ c.original }}</td>
+            <td class="status">{{ c.status }}</td>
+            <td class="doi">
+              {% if c.doi %}
+                <input type="text" value="{{ c.doi }}" class="doi-input">
+              {% else %}
+                <input type="text" placeholder="No DOI found" class="doi-input">
+              {% endif %}
+            </td>
+            <td class="confidence">
+              {% if c.confidence %}
+                {{ "%.0f" | format(c.confidence * 100) }}%
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.total }}</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.has_doi + stats.found }}</span>
+        <span class="stat-label">Found</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.not_found }}</span>
+        <span class="stat-label">Not found</span>
+      </div>
+    </section>
+
+    <div id="messages" class="messages"></div>
+
+    <script>
+      const JOB_ID = "{{ job.id }}";
+    </script>
+    <script src="/static/js/review.js"></script>
+  </main>
+</body>
+</html>
