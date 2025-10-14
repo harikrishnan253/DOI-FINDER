@@ -1477,41 +1477,26 @@ async def download_result(job_id: str):
         media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     )
 
+from fastapi.responses import Response
+
 @app.get("/export/{job_id}")
 async def export_csv(job_id: str):
-    """
-    Export citation data as CSV file for analysis.
-    
-    This endpoint generates a CSV file containing all citation data,
-    including original text, DOI lookup results, and metadata.
-    
-    Args:
-        job_id (str): Unique job identifier
-        
-    Returns:
-        FileResponse: CSV file with citation data
-        
-    Raises:
-        HTTPException: If job not found
-    """
-    
     if job_id not in jobs:
         raise HTTPException(status_code=404, detail="Job not found")
-    
+
     job = jobs[job_id]
     citations = job.get("citations", [])
-    
-    # Create CSV content
+
     csv_data = io.StringIO()
     writer = csv.writer(csv_data)
-    
+
     # Write CSV header
     writer.writerow([
-        "ID", "Original Citation", "Status", "DOI", "Confidence", 
+        "ID", "Original Citation", "Status", "DOI", "Confidence",
         "Title", "Authors", "Journal", "Year", "Source"
     ])
-    
-    # Write citation data
+
+    # Write citation rows
     for citation in citations:
         metadata = citation.get("metadata", {})
         writer.writerow([
@@ -1526,17 +1511,18 @@ async def export_csv(job_id: str):
             metadata.get("year", ""),
             citation.get("source", "")
         ])
-    
-    # Prepare CSV response
+
     csv_content = csv_data.getvalue()
     csv_data.close()
-    
-    return FileResponse(
-        path=None,
-        content=csv_content.encode(),
-        filename=f"citations_{job_id}.csv",
-        media_type="text/csv"
+
+    return Response(
+        content=csv_content,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename=citations_{job_id}.csv"
+        }
     )
+
 
 @app.get("/health")
 async def health_check():
@@ -1560,4 +1546,4 @@ if __name__ == "__main__":
     For production deployment, use a proper ASGI server like Gunicorn.
     """
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
