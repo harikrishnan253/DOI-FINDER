@@ -1,4 +1,4 @@
-# Bulk DOI Finder
+# DOI Finder
 
 A professional FastAPI-based web application that automatically extracts citations from Word documents and finds their corresponding Digital Object Identifiers (DOIs) using PubMed and CrossRef APIs.
 
