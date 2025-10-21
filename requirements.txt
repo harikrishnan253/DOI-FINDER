@@ -6,3 +6,5 @@ httpx==0.25.2
 certifi==2023.11.17
 python-docx==1.1.0
 aiofiles==23.2.1
+pip-syetem-certs
+requests==2.31.0
